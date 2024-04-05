@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ea90502877cd164aba84f7f1afbc7b5, type: 3}
+  m_Name: ItemQuality
+  m_EditorClassIdentifier: 
+  records:
+  - identifier: 1
+    _name: Horrendous
+    _icon: {fileID: 0}
+    _qualityText: 
+    _minimumQualityValue: 0
+  - identifier: 2
+    _name: Terrible
+    _icon: {fileID: 0}
+    _qualityText: +1
+    _minimumQualityValue: 100
+  - identifier: 3
+    _name: Bad
+    _icon: {fileID: 0}
+    _qualityText: +2
+    _minimumQualityValue: 1000
+  - identifier: 4
+    _name: Fair
+    _icon: {fileID: 0}
+    _qualityText: +3
+    _minimumQualityValue: 10000
+  - identifier: 5
+    _name: Average
+    _icon: {fileID: 0}
+    _qualityText: +4
+    _minimumQualityValue: 100000
+  - identifier: 6
+    _name: Decent
+    _icon: {fileID: 0}
+    _qualityText: +5
+    _minimumQualityValue: 1000000
+  - identifier: 7
+    _name: Good
+    _icon: {fileID: 0}
+    _qualityText: +6
+    _minimumQualityValue: 10000000
+  - identifier: 8
+    _name: Excellent
+    _icon: {fileID: 0}
+    _qualityText: +7
+    _minimumQualityValue: 100000000
+  - identifier: 9
+    _name: Masterwork
+    _icon: {fileID: 0}
+    _qualityText: +8
+    _minimumQualityValue: 1000000000

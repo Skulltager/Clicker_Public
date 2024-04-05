@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea94761f01344384fb1bfc5215d3a337, type: 3}
+  m_Name: ItemDrop
+  m_EditorClassIdentifier: 
+  records:
+  - identifier: 1
+    _dropChance: 0.05
+    _item: 1
+    _minAmount: 1
+    _maxAmount: 3
+    _prospectingRequirement: 5
+  - identifier: 2
+    _dropChance: 0.01
+    _item: 2
+    _minAmount: 1
+    _maxAmount: 1
+    _prospectingRequirement: 5
+  - identifier: 3
+    _dropChance: 0.001
+    _item: 3
+    _minAmount: 5
+    _maxAmount: 30
+    _prospectingRequirement: 5
+  - identifier: 4
+    _dropChance: 0.5
+    _item: 6
+    _minAmount: 1
+    _maxAmount: 1
+    _prospectingRequirement: 0
+  - identifier: 5
+    _dropChance: 0.01
+    _item: 5
+    _minAmount: 5
+    _maxAmount: 12
+    _prospectingRequirement: 5
+  - identifier: 6
+    _dropChance: 0.1
+    _item: 4
+    _minAmount: 1
+    _maxAmount: 1
+    _prospectingRequirement: 0

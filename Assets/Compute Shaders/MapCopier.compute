@@ -1,0 +1,73 @@
+﻿#pragma kernel CopyMaps
+
+int size;
+int targetWidth;
+int targetHeight;
+int leftPadding;
+int bottomPadding;
+
+StructuredBuffer<int> bottomLeftBiomeMap;
+StructuredBuffer<int> bottomCenterBiomeMap;
+StructuredBuffer<int> bottomRightBiomeMap;
+StructuredBuffer<int> centerLeftBiomeMap;
+StructuredBuffer<int> centerCenterBiomeMap;
+StructuredBuffer<int> centerRightBiomeMap;
+StructuredBuffer<int> topLeftBiomeMap;
+StructuredBuffer<int> topCenterBiomeMap;
+StructuredBuffer<int> topRightBiomeMap;
+
+StructuredBuffer<int> bottomLeftRoomMap;
+StructuredBuffer<int> bottomCenterRoomMap;
+StructuredBuffer<int> bottomRightRoomMap;
+StructuredBuffer<int> centerLeftRoomMap;
+StructuredBuffer<int> centerCenterRoomMap;
+StructuredBuffer<int> centerRightRoomMap;
+StructuredBuffer<int> topLeftRoomMap;
+StructuredBuffer<int> topCenterRoomMap;
+StructuredBuffer<int> topRightRoomMap;
+
+RWStructuredBuffer<int> biomeMap;
+RWStructuredBuffer<int> roomMap;
+
+int2 GetMapValuesIndex(int xPosition, int yPosition)
+{
+	if (xPosition < 0)
+	{
+		if (yPosition < 0)
+			return int2(bottomLeftBiomeMap[(xPosition + size) + (yPosition + size) * size], bottomLeftRoomMap[(xPosition + size) + (yPosition + size) * size]);
+		else if (yPosition >= size)
+			return int2(topLeftBiomeMap[(xPosition + size) + (yPosition - size) * size], topLeftRoomMap[(xPosition + size) + (yPosition - size) * size]);
+		else
+			return int2(centerLeftBiomeMap[(xPosition + size) + yPosition * size], centerLeftRoomMap[(xPosition + size) + yPosition * size]);
+	}
+	else if (xPosition >= size)
+	{
+		if (yPosition < 0)
+			return int2(bottomRightBiomeMap[(xPosition - size) + (yPosition + size) * size], bottomRightRoomMap[(xPosition - size) + (yPosition + size) * size]);\
+		else if (yPosition >= size)
+			return int2(topRightBiomeMap[(xPosition - size) + (yPosition - size) * size], topRightRoomMap[(xPosition - size) + (yPosition - size) * size]);
+		else 
+			return int2(centerRightBiomeMap[(xPosition - size) + yPosition * size], centerRightRoomMap[(xPosition - size) + yPosition * size]);
+	}
+	else if (yPosition < 0)
+		return int2(bottomCenterBiomeMap[xPosition + (yPosition + size) * size], bottomCenterRoomMap[xPosition + (yPosition + size) * size]);
+
+	else if (yPosition >= size)
+		return int2(topCenterBiomeMap[xPosition + (yPosition - size) * size], topCenterRoomMap[xPosition + (yPosition - size) * size]);
+	else 
+		return int2(centerCenterBiomeMap[xPosition + yPosition * size], centerCenterRoomMap[xPosition + yPosition * size]);
+}
+
+[numthreads(32, 32, 1)]
+void CopyMaps(uint3 id : SV_DispatchThreadID)
+{
+	if ((int)id.x >= targetWidth || (int)id.y >= targetHeight)
+		return;
+
+	int xPosition = (int)id.x + leftPadding;
+	int yPosition = (int)id.y + bottomPadding;
+
+	int2 roomBiomeIndex = GetMapValuesIndex(xPosition, yPosition);
+	biomeMap[id.x + id.y * targetWidth] = roomBiomeIndex.x;
+	roomMap[id.x + id.y * targetWidth] = roomBiomeIndex.y;
+}

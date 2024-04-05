@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf9ab7985c6381c45923da27cbce19e2, type: 3}
+  m_Name: BiomeLayer
+  m_EditorClassIdentifier: 
+  records:
+  - identifier: 1
+    _sizeFactor: 0.5
+    _roughness: 0.5
+  - identifier: 2
+    _sizeFactor: 0.25
+    _roughness: 0.25
+  - identifier: 3
+    _sizeFactor: 0.125
+    _roughness: 0.125
+  - identifier: 4
+    _sizeFactor: 0.0625
+    _roughness: 0.0625
+  - identifier: 5
+    _sizeFactor: 0.03125
+    _roughness: 0.03125
+  - identifier: 6
+    _sizeFactor: 0.015625
+    _roughness: 0.015625

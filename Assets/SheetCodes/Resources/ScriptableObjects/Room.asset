@@ -1,0 +1,111 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1eb7e47f8c4d9a448249f4ff9af49b3, type: 3}
+  m_Name: Room
+  m_EditorClassIdentifier: 
+  records:
+  - identifier: 2
+    _minSpawnDistance: 0
+    _maxSpawnDistance: 0
+    _minSpawnDistanceWeight: 0
+    _maxSpawnDistanceWeight: 0
+    _minBiomeDistance: 0
+    _maxBiomeDistance: 0
+    _minRoomSize: 0
+    _maxRoomSize: 0
+    _minDoors: 10
+    _maxDoors: 10
+    _minResourceSpawns: 0
+    _maxResourceSpawns: 0
+    _resourceSpawnCountMultiplier: 0
+    _resourceSpawnWeights: 
+    _roomMaterials: 1
+  - identifier: 3
+    _minSpawnDistance: 0
+    _maxSpawnDistance: 1
+    _minSpawnDistanceWeight: 3
+    _maxSpawnDistanceWeight: 3
+    _minBiomeDistance: 0
+    _maxBiomeDistance: 20000
+    _minRoomSize: 4
+    _maxRoomSize: 5
+    _minDoors: 4
+    _maxDoors: 4
+    _minResourceSpawns: 100
+    _maxResourceSpawns: 100
+    _resourceSpawnCountMultiplier: 1.2
+    _resourceSpawnWeights: 02000000
+    _roomMaterials: 3
+  - identifier: 4
+    _minSpawnDistance: 0
+    _maxSpawnDistance: 1
+    _minSpawnDistanceWeight: 3
+    _maxSpawnDistanceWeight: 3
+    _minBiomeDistance: 0
+    _maxBiomeDistance: 20000
+    _minRoomSize: 7
+    _maxRoomSize: 10
+    _minDoors: 2
+    _maxDoors: 2
+    _minResourceSpawns: 40
+    _maxResourceSpawns: 40
+    _resourceSpawnCountMultiplier: 1.2
+    _resourceSpawnWeights: 01000000
+    _roomMaterials: 2
+  - identifier: 5
+    _minSpawnDistance: 0
+    _maxSpawnDistance: 1
+    _minSpawnDistanceWeight: 3
+    _maxSpawnDistanceWeight: 3
+    _minBiomeDistance: 0
+    _maxBiomeDistance: 20000
+    _minRoomSize: 10
+    _maxRoomSize: 15
+    _minDoors: 6
+    _maxDoors: 10
+    _minResourceSpawns: 0
+    _maxResourceSpawns: 0
+    _resourceSpawnCountMultiplier: 0
+    _resourceSpawnWeights: 
+    _roomMaterials: 4
+  - identifier: 6
+    _minSpawnDistance: 0
+    _maxSpawnDistance: 1
+    _minSpawnDistanceWeight: 3
+    _maxSpawnDistanceWeight: 3
+    _minBiomeDistance: 0
+    _maxBiomeDistance: 20000
+    _minRoomSize: 4
+    _maxRoomSize: 6
+    _minDoors: 4
+    _maxDoors: 4
+    _minResourceSpawns: 0
+    _maxResourceSpawns: 0
+    _resourceSpawnCountMultiplier: 0
+    _resourceSpawnWeights: 
+    _roomMaterials: 6
+  - identifier: 7
+    _minSpawnDistance: 0
+    _maxSpawnDistance: 1
+    _minSpawnDistanceWeight: 3
+    _maxSpawnDistanceWeight: 3
+    _minBiomeDistance: 0
+    _maxBiomeDistance: 20000
+    _minRoomSize: 5
+    _maxRoomSize: 7
+    _minDoors: 4
+    _maxDoors: 4
+    _minResourceSpawns: 0
+    _maxResourceSpawns: 0
+    _resourceSpawnCountMultiplier: 0
+    _resourceSpawnWeights: 
+    _roomMaterials: 5

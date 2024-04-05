@@ -1,0 +1,87 @@
+﻿#pragma kernel CalculateBiomeDistances;
+
+int size;
+
+StructuredBuffer<int> bottomLeftBiomeMap;
+StructuredBuffer<int> bottomCenterBiomeMap;
+StructuredBuffer<int> bottomRightBiomeMap;
+StructuredBuffer<int> centerLeftBiomeMap;
+StructuredBuffer<int> centerCenterBiomeMap;
+StructuredBuffer<int> centerRightBiomeMap;
+StructuredBuffer<int> topLeftBiomeMap;
+StructuredBuffer<int> topCenterBiomeMap;
+StructuredBuffer<int> topRightBiomeMap;
+
+RWStructuredBuffer<int> biomeDistanceMap;
+
+int GetOtherBiomeIndex(int xPosition, int yPosition)
+{
+	if (xPosition < 0)
+	{
+		if (yPosition < 0)
+			return bottomLeftBiomeMap[(xPosition + size) + (yPosition + size) * size];
+
+		if (yPosition >= size)
+			return topLeftBiomeMap[(xPosition + size) + (yPosition - size) * size];
+
+		return centerLeftBiomeMap[(xPosition + size) + yPosition * size];
+	}
+
+	if (xPosition >= size)
+	{
+		if (yPosition < 0)
+			return bottomRightBiomeMap[(xPosition - size) + (yPosition + size) * size];
+
+		if (yPosition >= size)
+			return topRightBiomeMap[(xPosition - size) + (yPosition - size) * size];
+
+		return centerRightBiomeMap[(xPosition - size) + yPosition * size];
+	}
+
+	if (yPosition < 0)
+		return bottomCenterBiomeMap[xPosition + (yPosition + size) * size];
+
+	if (yPosition >= size)
+		return topCenterBiomeMap[xPosition + (yPosition - size) * size];
+
+	return centerCenterBiomeMap[xPosition + yPosition * size];
+}
+
+[numthreads(8, 8, 1)]
+void CalculateBiomeDistances(uint3 id : SV_DispatchThreadID)
+{
+	if ((int) id.x >= size || (int)id.y >= size)
+		return;
+
+	bool found = false;
+	int currentBiome = centerCenterBiomeMap[id.x + id.y * size];
+
+	for (int i = 1; i <= size; i++)
+	{
+		if (currentBiome != GetOtherBiomeIndex(id.x - i, id.y))
+			break;
+
+		if (currentBiome != GetOtherBiomeIndex(id.x + i, id.y))
+			break;
+
+		for (int j = -i + 1; j <= i - 1; j++)
+		{
+			int h = i - abs(j);
+			if (currentBiome != GetOtherBiomeIndex(id.x + j, id.y - h))
+			{
+				found = true;
+				break;
+			}
+
+			if (currentBiome != GetOtherBiomeIndex(id.x + j, id.y + h))
+			{
+				found = true;
+				break;
+			}
+		}
+
+		if (found)
+			break;
+	}
+	biomeDistanceMap[id.x + id.y * size] = i;
+}

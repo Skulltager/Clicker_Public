@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c6b08076db6b14bb0934437b5db102, type: 3}
+  m_Name: ResourceSpawn
+  m_EditorClassIdentifier: 
+  records:
+  - identifier: 1
+    _minDistance: 0
+    _maxDistance: 100
+    _minDistanceSpawnWeight: 100
+    _maxDistanceSpawnWeight: 100
+    _minDistanceMinAmount: 10
+    _minDistanceMaxAmount: 30
+    _maxDistanceMinAmount: 30
+    _maxDistanceMaxAmount: 80
+    _distanceAmountFactor: 1.01
+    _resourceType: 1
+    _repawnTimer: 1800
+    _toolRequired: 0
+  - identifier: 2
+    _minDistance: 0
+    _maxDistance: 100
+    _minDistanceSpawnWeight: 100
+    _maxDistanceSpawnWeight: 100
+    _minDistanceMinAmount: 10
+    _minDistanceMaxAmount: 30
+    _maxDistanceMinAmount: 30
+    _maxDistanceMaxAmount: 80
+    _distanceAmountFactor: 1.01
+    _resourceType: 2
+    _repawnTimer: 600
+    _toolRequired: 1

@@ -1,0 +1,90 @@
+﻿#pragma kernel GenerateBiomeMap;
+
+uint size;
+int biomes;
+int xLocation;
+int yLocation;
+
+StructuredBuffer<int> biomeLayers;
+StructuredBuffer<int> biomeStepIndices;
+
+StructuredBuffer<int> biomeDistancesToCenter;
+StructuredBuffer<float> biomeScaleStrengths;
+StructuredBuffer<float> biomeClampStrengths;
+StructuredBuffer<float> biomeElevationStrengths;
+
+StructuredBuffer<uint> biomeSeeds;
+StructuredBuffer<float> biomeStepSizes;
+StructuredBuffer<float> biomeStepRoughness;
+
+RWStructuredBuffer<int> biomeMap;
+
+float Hash(uint seed, int xLocation, int yLocation)
+{
+	seed ^= 2747636419u;
+	seed += xLocation;
+	seed *= 2654435769u;
+	seed ^= seed >> 16;
+	seed += yLocation;
+	seed *= 2654435769u;
+	seed ^= seed >> 16;
+	seed *= 2654435769u;
+	return seed / 4294967295.0;
+}
+
+[numthreads(8, 8, 1)]
+void GenerateBiomeMap(uint3 id : SV_DispatchThreadID)
+{
+	if (id.x >= size || id.y >= size)
+		return;
+
+	float highestBiomeValue = 0;
+	int highestBiomeIndex = 0;
+
+	int xPosition = id.x + xLocation;
+	int yPosition = id.y + yLocation;
+
+	for (int i = 0; i < biomes; i++)
+	{
+		int biomeLayerCount = biomeLayers[i];
+		int biomeStartIndex = biomeStepIndices[i];
+		int biomeDistanceToCenter = biomeDistancesToCenter[i];
+		float biomeValue = biomeElevationStrengths[i];
+		for (int j = 0; j < biomeLayerCount; j++)
+		{
+			float stepSize = biomeStepSizes[biomeStartIndex + j];
+			float roughness = biomeStepRoughness[biomeStartIndex + j];
+			int seed = biomeSeeds[biomeStartIndex + j];
+
+			float xPos = xPosition / stepSize;
+			float yPos = yPosition / stepSize;
+
+			int xIndex = xPos;
+			int yIndex = yPos;
+
+			float horizontalFactor = (xPos < 0) * (1 - (-xPos % 1)) + (xPos > 0) * (xPos % 1);
+			float verticalFactor = (yPos < 0) * (1 - (-yPos % 1)) + (yPos > 0) * (yPos % 1);
+
+			xIndex -= xPos < 0 && horizontalFactor > 0;
+			yIndex -= yPos < 0 && verticalFactor > 0;
+
+			float bottomLeftValue = Hash(seed, xIndex, yIndex);
+			float bottomRightValue = Hash(seed, xIndex + 1, yIndex);
+			float topLeftValue = Hash(seed, xIndex, yIndex + 1);
+			float topRightValue = Hash(seed, xIndex + 1, yIndex + 1);
+
+			float leftHorizontalValue = bottomLeftValue * (1 - verticalFactor) + topLeftValue * verticalFactor;
+			float rightHorizontalValue = bottomRightValue * (1 - verticalFactor) + topRightValue * verticalFactor;
+			biomeValue += (leftHorizontalValue * (1 - horizontalFactor) + rightHorizontalValue * horizontalFactor) * roughness;
+		}
+		biomeValue = (biomeValue >= 0.5) * (biomeValue + (1 - biomeValue) * biomeClampStrengths[i]) + (biomeValue < 0.5) * (biomeValue - (biomeValue * biomeClampStrengths[i]));
+		biomeValue += biomeValue * biomeScaleStrengths[i];
+
+		int distanceToCenter = abs(xPosition) + abs(yPosition);
+		biomeValue *= distanceToCenter >= biomeDistanceToCenter ? 1 : (float)distanceToCenter / (float)biomeDistanceToCenter;
+		highestBiomeIndex = (highestBiomeValue <= biomeValue) * i + (highestBiomeValue > biomeValue) * highestBiomeIndex;
+		highestBiomeValue = (highestBiomeValue <= biomeValue) * biomeValue + (highestBiomeValue > biomeValue) * highestBiomeValue;
+	}
+
+	biomeMap[id.x + id.y * size] = highestBiomeIndex;
+}
